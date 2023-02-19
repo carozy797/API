@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Path
 
 app = FastAPI()
 inverntory = {
@@ -9,10 +9,10 @@ inverntory = {
 
     }
 }
-# creating end point
+# creating end point with path parameter
 @app.get("/get-items/{itemId}")
-def get_items(itemId: int):
-    return inverntory[itemId]
+def get_items(itemId: int = Path(None, description = "the id of the item")):
+    return inverntory.get(itemId)
 
 # @app.get("/")
 # def home():
