@@ -13,8 +13,3 @@ inverntory = {
 @app.get("/get-items/{itemId}")
 def get_items(itemId: int = Path(None, description = "the id of the item")):
     return inverntory.get(itemId)
-
-# @app.get("/")
-# def home():
-#     return {"Data": "Testing"}
- 
