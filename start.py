@@ -13,7 +13,8 @@ inventory = {}
 # creating end point with path parameter
 @app.get("/get-items/{itemId}")
 def get_items(itemId: int = Path(None, description = "the id of the item")):
-    return inventory.get(itemId)
+    return inventory.get(itemId, "wrong Id specified")
+
 # getting item by name using query
 @app.get("/get-items-by-name")
 def get_items_by_name(name : str = Query(None, description = "the name of the item", title = "Name")):
@@ -21,7 +22,6 @@ def get_items_by_name(name : str = Query(None, description = "the name of the it
         if inventory[item_id].name == name:
             return inventory[item_id]
     return {"Data": "Not found"}
-
 
 # posting data 
 @app.post("/create-item")
