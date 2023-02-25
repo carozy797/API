@@ -6,6 +6,11 @@ class Item(BaseModel):
     name: str
     price: float
     brand: Optional[str] = None
+# to allow update for one at a time
+class UpdateItem(BaseModel):
+    name: Optional[str] = None
+    price: Optional[float] = None
+    brand: Optional[str] = None
 
 
 app = FastAPI()
@@ -32,7 +37,7 @@ def create_item(item : Item, item_id: int):
     return inventory[item_id]
 
 @app.put("/update-item")
-def update_item(item: Item, item_id: int):
+def update_item(item: UpdateItem, item_id: int):
     if item_id not in inventory:
         return {"error": "Item does not exist"}
     inventory[item_id] = item
