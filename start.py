@@ -22,3 +22,12 @@ def get_items_by_name(name : str = Query(None, description = "the name of the it
             return inventory[item_id]
     return {"Data": "Not found"}
 
+
+# posting data 
+@app.post("/create-item")
+def create_item(item : Item, item_id: int):
+    if item_id in inventory:
+        return {"error": "Item already exists"}
+    inventory[item_id] = item
+    return inventory[item_id]
+
