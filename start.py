@@ -31,3 +31,9 @@ def create_item(item : Item, item_id: int):
     inventory[item_id] = item
     return inventory[item_id]
 
+@app.put("/update-item")
+def update_item(item: Item, item_id: int):
+    if item_id not in inventory:
+        return {"error": "Item does not exist"}
+    inventory[item_id] = item
+    return inventory[item_id]
