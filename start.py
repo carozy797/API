@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Path, Query
+from fastapi import FastAPI, Path, Query, HTTPException
 from typing import Optional
 from pydantic import BaseModel
 
@@ -40,5 +40,17 @@ def create_item(item : Item, item_id: int):
 def update_item(item: UpdateItem, item_id: int):
     if item_id not in inventory:
         return {"error": "Item does not exist"}
-    inventory[item_id] = item
+    if item.name != None:
+      inventory[item_id].name = item.name
+    if item.brand != None:
+      inventory[item_id].brand = item.brand
+    if item.price != None:
+      inventory[item_id].price = item.price
     return inventory[item_id]
+
+# creating delete endpt
+@app.delete("delete-item")
+def delete_item(item_id: int = Query(...,description = "Id of the item to delete", gt = 0)):
+    if item_id not in inventory:
+        return {"error": "Id of the item does not exist"}
+    del inventory[item_id]
